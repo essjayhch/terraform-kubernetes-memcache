@@ -1,9 +1,10 @@
 resource "kubernetes_stateful_set" "memcached" {
   metadata {
-    name = "memcached"
+    name = var.set_name
 
     labels = {
-      app = "memcached"
+      "app.kubernetes.io/name" = var.set_name
+      "app.kubernetes.io/part-of" = var.set_name
     }
 
     namespace = var.namespace
@@ -15,7 +16,8 @@ resource "kubernetes_stateful_set" "memcached" {
 
     selector {
       match_labels = {
-        app = "memcached"
+        "app.kubernetes.io/name" = var.set_name
+        "app.kubernetes.io/part-of" = var.set_name
       }
     }
 
@@ -28,19 +30,29 @@ resource "kubernetes_stateful_set" "memcached" {
     template {
       metadata {
         labels = {
-          app = "memcached"
+          "app.kubernetes.io/name" = var.set_name
+          "app.kubernetes.io/part-of" = var.set_name
         }
       }
 
       spec {
+
+        security_context {
+          fs_group = var.fs_group
+        }
         container {
           name              = "memcached"
           image             = "memcached:1.5.12-alpine"
           image_pull_policy = "Always"
 
+          command = concat([
+            "memcached",
+            "-m ${var.max_item_memory}",
+          ], var.extra_arguments)
+
           port {
             name           = "memcached"
-            container_port = "11211"
+            container_port = var.memcache_port
           }
 
           liveness_probe {
@@ -52,6 +64,12 @@ resource "kubernetes_stateful_set" "memcached" {
             timeout_seconds       = 5
           }
 
+          resources {
+            requests {
+              memory = var.memory_requests
+              cpu = var.cpu_requests
+            }
+          }
           readiness_probe {
             tcp_socket {
               port = "memcached"
@@ -69,7 +87,7 @@ resource "kubernetes_stateful_set" "memcached" {
 
           port {
             name           = "metrics"
-            container_port = 9150
+            container_port = var.metrics_port
           }
         }
       }

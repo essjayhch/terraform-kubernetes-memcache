@@ -13,18 +13,19 @@ resource "kubernetes_service" "memcached" {
 
     port {
       name        = "memcached"
-      port        = 11211
+      port        = var.memcache_port
       target_port = "memcached"
     }
 
     port {
       name        = "metrics"
-      port        = 9150
+      port        = var.metrics_port
       target_port = "metrics"
     }
 
     selector = {
-      app = "memcached"
+      "app.kubernetes.io/name" = var.set_name
+      "app.kubernetes.io/part-of" = var.set_name
     }
   }
 }

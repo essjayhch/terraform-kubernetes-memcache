@@ -1,6 +1,6 @@
 resource "kubernetes_service" "memcached" {
   metadata {
-    name      = "memcached"
+    name      = var.set_name
     namespace = var.namespace
 
     labels = {

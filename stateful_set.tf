@@ -39,6 +39,8 @@ resource "kubernetes_stateful_set" "memcached" {
 
         security_context {
           fs_group = var.fs_group
+          rus_as_user = var.run_as
+          run_as_group var.run_as
         }
         container {
           name              = "memcached"

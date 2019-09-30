@@ -18,18 +18,10 @@ variable "metrics_port" {
   default = 9150
 }
 
-variable "memory_requests" {
-  description = "Memory Resource Requests"
-  default = "64Mi"
-}
 
 variable "max_item_memory" {
   description = "Ammount of memory reserved for memcached (in megabytes)"
   default = "64"
-}
-variable "cpu_requests" {
-  description = "CPU Resource Requests"
-  default = "50m"
 }
 
 variable "run_as" {
@@ -51,4 +43,32 @@ variable "extra_arguments" {
 variable "set_name" {
   description = "Name for kubernetes objects"
   default = "memcached"
+}
+
+variable "resource_requests" {
+  type = "map"
+
+  description = <<EOF
+Resource Requests
+ref http://kubernetes.io/docs/user-guide/compute-resources/
+resource_requests = {
+  memory = "64Mi"
+  cpu = "50m"
+}
+EOF
+  default = {}
+}
+
+variable "resource_limits" {
+  type = "map"
+
+  description = <<EOF
+Resource Requests
+ref http://kubernetes.io/docs/user-guide/compute-resources/
+resource_limits = {
+  memory = "256Mi"
+  cpu = "100m"
+}
+EOF
+  default = {}
 }

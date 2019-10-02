@@ -4,7 +4,8 @@ resource "kubernetes_service" "memcached" {
     namespace = var.namespace
 
     labels = {
-      app = "memcached"
+      "app.kubernetes.io/name" = var.set_name
+      "app.kubernetes.io/part-of" = "memcached"
     }
   }
 
@@ -25,7 +26,7 @@ resource "kubernetes_service" "memcached" {
 
     selector = {
       "app.kubernetes.io/name" = var.set_name
-      "app.kubernetes.io/part-of" = var.set_name
+      "app.kubernetes.io/part-of" = "memcached"
     }
   }
 }

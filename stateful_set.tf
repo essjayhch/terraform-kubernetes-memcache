@@ -4,7 +4,7 @@ resource "kubernetes_stateful_set" "memcached" {
 
     labels = {
       "app.kubernetes.io/name" = var.set_name
-      "app.kubernetes.io/part-of" = var.set_name
+      "app.kubernetes.io/part-of" = "memcached"
     }
 
     namespace = var.namespace
@@ -17,7 +17,7 @@ resource "kubernetes_stateful_set" "memcached" {
     selector {
       match_labels = {
         "app.kubernetes.io/name" = var.set_name
-        "app.kubernetes.io/part-of" = var.set_name
+        "app.kubernetes.io/part-of" = "memcached"
       }
     }
 
@@ -31,16 +31,14 @@ resource "kubernetes_stateful_set" "memcached" {
       metadata {
         labels = {
           "app.kubernetes.io/name" = var.set_name
-          "app.kubernetes.io/part-of" = var.set_name
+          "app.kubernetes.io/part-of" = "memcached"
         }
       }
 
       spec {
-
         security_context {
           fs_group = var.fs_group
           run_as_user = var.run_as
-          run_as_group = var.run_as
         }
         container {
           name              = "memcached"
@@ -59,7 +57,7 @@ resource "kubernetes_stateful_set" "memcached" {
 
           liveness_probe {
             tcp_socket {
-              port = "memcahced"
+              port = "memcached"
             }
 
             initial_delay_seconds = 30

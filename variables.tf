@@ -40,9 +40,9 @@ variable "extra_arguments" {
   default = []
 }
 
-variable "set_name" {
+variable "instance" {
   description = "Name for kubernetes objects"
-  default = "memcached"
+  default = "default"
 }
 
 variable "resource_requests" {

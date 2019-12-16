@@ -1,10 +1,10 @@
 resource "kubernetes_service" "memcached" {
   metadata {
-    name      = var.set_name
+    name      = local.instance_name
     namespace = var.namespace
 
     labels = {
-      "app.kubernetes.io/name" = var.set_name
+      "app.kubernetes.io/name" = local.instance_name
       "app.kubernetes.io/part-of" = "memcached"
     }
   }
@@ -25,7 +25,7 @@ resource "kubernetes_service" "memcached" {
     }
 
     selector = {
-      "app.kubernetes.io/name" = var.set_name
+      "app.kubernetes.io/name" = local.instance_name
       "app.kubernetes.io/part-of" = "memcached"
     }
   }

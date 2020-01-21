@@ -60,7 +60,7 @@ EOF
 }
 
 variable "resource_limits" {
-  type = "map"
+  type = map
 
   description = <<EOF
 Resource Requests

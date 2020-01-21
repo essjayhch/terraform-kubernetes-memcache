@@ -46,7 +46,7 @@ variable "instance" {
 }
 
 variable "resource_requests" {
-  type = "map"
+  type = map
 
   description = <<EOF
 Resource Requests

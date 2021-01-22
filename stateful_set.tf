@@ -65,12 +65,12 @@ resource "kubernetes_stateful_set" "memcached" {
           }
 
           resources {
-            requests {
+            requests = {
               memory = local.actual_resource_requests["memory"]
               cpu = local.actual_resource_requests["cpu"]
             }
 
-            limits {
+            limits = {
               memory = local.actual_resource_limits["memory"]
               cpu = local.actual_resource_limits["cpu"]
             }

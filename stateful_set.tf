@@ -7,6 +7,10 @@ resource "kubernetes_stateful_set" "memcached" {
       "app.kubernetes.io/part-of" = "memcached"
     }
 
+    annotations = {
+      "prometheus.io/scrape" = "true"
+    }
+
     namespace = var.namespace
   }
 

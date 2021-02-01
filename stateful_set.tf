@@ -7,10 +7,6 @@ resource "kubernetes_stateful_set" "memcached" {
       "app.kubernetes.io/part-of" = "memcached"
     }
 
-    annotations = {
-      "prometheus.io/scrape" = "true"
-    }
-
     namespace = var.namespace
   }
 
@@ -36,6 +32,11 @@ resource "kubernetes_stateful_set" "memcached" {
         labels = {
           "app.kubernetes.io/name" = local.instance_name
           "app.kubernetes.io/part-of" = "memcached"
+        }
+        annotations = {
+          "prometheus.io/scrape" = "true"
+          "prometheus.io/path" = "/metrics"
+          "prometheus.io/port" = "metrics"
         }
       }
 

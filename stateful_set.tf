@@ -1,4 +1,5 @@
 resource "kubernetes_stateful_set" "memcached" {
+  wait_for_rollout = false
   metadata {
     name = local.instance_name
 
@@ -36,9 +37,12 @@ resource "kubernetes_stateful_set" "memcached" {
       }
 
       spec {
+        automount_service_account_tokent = false
+        enable_service_links = false
         security_context {
           fs_group = var.fs_group
           run_as_user = var.run_as
+          run_as_group = 0
         }
         container {
           name              = "memcached"

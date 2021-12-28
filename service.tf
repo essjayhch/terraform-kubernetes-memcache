@@ -3,6 +3,11 @@ resource "kubernetes_service" "memcached" {
     name      = local.instance_name
     namespace = var.namespace
 
+    annotations = var.gke_neg ? {
+      "cloud.google.com/neg-status" = ""                             # Eliminates Terraform diff
+      "cloud.google.com/neg"        = jsonencode({ ingress = true }) # Eliminates Terraform diff
+    } : {}
+
     labels = {
       "app.kubernetes.io/name" = local.instance_name
       "app.kubernetes.io/part-of" = "memcached"
@@ -28,6 +33,12 @@ resource "kubernetes_service" "memcached" {
       "app.kubernetes.io/name" = local.instance_name
       "app.kubernetes.io/part-of" = "memcached"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations["cloud.google.com/neg-status"]
+    ]
   }
 }
 

@@ -9,7 +9,7 @@ resource "kubernetes_service" "memcached" {
     } : {}
 
     labels = {
-      "app.kubernetes.io/name" = local.instance_name
+      "app.kubernetes.io/name"    = local.instance_name
       "app.kubernetes.io/part-of" = "memcached"
     }
   }
@@ -30,7 +30,7 @@ resource "kubernetes_service" "memcached" {
     }
 
     selector = {
-      "app.kubernetes.io/name" = local.instance_name
+      "app.kubernetes.io/name"    = local.instance_name
       "app.kubernetes.io/part-of" = "memcached"
     }
   }

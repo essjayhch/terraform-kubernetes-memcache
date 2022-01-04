@@ -38,8 +38,6 @@ resource "kubernetes_stateful_set" "memcached" {
       }
 
       spec {
-        automount_service_account_tokent = false
-        enable_service_links = false
         security_context {
           fs_group = var.fs_group
           run_as_user = var.run_as

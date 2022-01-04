@@ -1,4 +1,4 @@
-resource "kubernetes_stateful_set" "memcached" {
+resource kubernetes_stateful_set memcached {
   wait_for_rollout = false
 
   metadata {

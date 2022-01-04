@@ -1,4 +1,4 @@
-resource "kubernetes_service" "memcached" {
+resource kubernetes_service memcached {
   metadata {
     name      = local.instance_name
     namespace = var.namespace

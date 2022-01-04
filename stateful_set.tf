@@ -1,5 +1,6 @@
 resource "kubernetes_stateful_set" "memcached" {
   wait_for_rollout = false
+
   metadata {
     name = local.instance_name
 

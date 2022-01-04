@@ -22,5 +22,4 @@ locals {
 
   actual_resource_requests = merge(var.default_resource_requests, var.resource_requests)
   actual_resource_limits = merge(var.default_resource_limits, var.resource_limits)
-
 }
